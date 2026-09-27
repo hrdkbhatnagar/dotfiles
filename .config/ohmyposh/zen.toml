@@ -12,6 +12,7 @@ final_space = true
   background = 'transparent'
   foreground_templates = ['{{if gt .Code 0}}red{{end}}', '{{if eq .Code 0}}magenta{{end}}']
 
+# ---------- Line 1 (left): user@host  path  git ----------
 [[blocks]]
   type = 'prompt'
   alignment = 'left'
@@ -36,11 +37,7 @@ final_space = true
       style = 'full'
 
   [[blocks.segments]]
-    # basic template 
-    # template = ' {{ .HEAD }}{{ if or (.Working.Changed) (.Staging.Changed) }}*{{ end }} <cyan>{{ if gt .Behind 0 }}↓{{ end }}{{ if gt .Ahead 0 }}↑{{ end }}</>'
-    # more informative, colors and number of changes 
-    template = ' {{ .HEAD }}{{ if .Working.Changed }}<yellow> *</>{{ end }}{{ if .Staging.Changed }}<green> *</>{{ end }}{{ if gt .Behind 0 }}<red> ↓{{ .Behind }}</>{{ end }}{{ if gt .Ahead 0 }}<green> ↑{{ .Ahead }}</>{{ end }}'
-
+    template = ' git:<b>({{ .HEAD }})</b>{{ if .Working.Changed }}<yellow> *</>{{ end }}{{ if .Staging.Changed }}<green> *</>{{ end }}{{ if gt .Behind 0 }}<red> ↓{{ .Behind }}</>{{ end }}{{ if gt .Ahead 0 }}<green> ↑{{ .Ahead }}</>{{ end }}'
     foreground = 'white'
     background = 'transparent'
     type = 'git'
@@ -52,9 +49,20 @@ final_space = true
       commit_icon = '@'
       fetch_status = true
 
+# ---------- Line 1 (right): python env  execution time ----------
 [[blocks]]
   type = 'rprompt'
   overflow = 'hidden'
+
+  [[blocks.segments]]
+    type = 'python'
+    style = 'plain'
+    foreground = 'yellow'
+    background = 'transparent'
+    template = '{{ if .Venv }}(<b>{{ .Venv }}</b>) {{ end }}'
+
+    [blocks.segments.properties]
+      fetch_version = false
 
   [[blocks.segments]]
     template = '{{ .FormattedMs }}'
@@ -67,6 +75,7 @@ final_space = true
       cache_duration = 'none'
       threshold = 5000
 
+# ---------- Line 2: ❯ (magenta, red after a failed command) ----------
 [[blocks]]
   type = 'prompt'
   alignment = 'left'

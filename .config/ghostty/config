@@ -1,0 +1,45 @@
+theme = Catppuccin Macchiato
+window-colorspace = display-p3
+clipboard-read = allow
+clipboard-write = allow
+copy-on-select = clipboard
+font-family = JetBrainsMono Nerd Font Mono
+font-size=14
+font-thicken=true
+
+keybind = unconsumed:super+c=copy_to_clipboard
+
+# Cmd+hjkl -> move between tmux panes (M-h/j/k/l)
+keybind = cmd+h=text:\x1bh
+keybind = cmd+j=text:\x1bj
+keybind = cmd+k=text:\x1bk
+keybind = cmd+l=text:\x1bl
+
+# Cmd+1..9 -> switch tmux windows (M-1..9)
+keybind = cmd+digit_1=text:\x1b1
+keybind = cmd+digit_2=text:\x1b2
+keybind = cmd+digit_3=text:\x1b3
+keybind = cmd+digit_4=text:\x1b4
+keybind = cmd+digit_5=text:\x1b5
+keybind = cmd+digit_6=text:\x1b6
+keybind = cmd+digit_7=text:\x1b7
+keybind = cmd+digit_8=text:\x1b8
+keybind = cmd+digit_9=text:\x1b9
+
+# Windows and panes
+keybind = cmd+t=text:\x1bt
+keybind = cmd+z=text:\x1bz
+keybind = cmd+d=text:\x1bv
+keybind = cmd+shift+d=text:\x1bs
+keybind = cmd+shift+h=text:\x1bp
+keybind = cmd+shift+l=text:\x1bn
+keybind = cmd+shift+w=text:\x1bX
+keybind = cmd+x=text:\x1bx
+keybind = cmd+r=text:\x1br
+keybind = cmd+shift+r=text:\x1bR
+
+keybind = cmd+shift+bracket_left=text:\x1b{
+keybind = cmd+shift+bracket_right=text:\x1b}
+window-padding-color = extend
+window-padding-balance = true
+adjust-cell-height = 2%
