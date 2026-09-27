@@ -2,15 +2,40 @@ console_title_template = '{{ .Shell }} in {{ .Folder }}'
 version = 3
 final_space = true
 
+# ---------- Colours: catppuccin macchiato ----------
+# Use these anywhere as p:<name>, e.g. foreground = 'p:blue' or <p:yellow>text</>.
+# To switch flavour, replace this block with another catppuccin palette.
+[palette]
+  rosewater = '#f4dbd6'
+  flamingo  = '#f0c6c6'
+  pink      = '#f5bde6'
+  mauve     = '#c6a0f6'
+  red       = '#ed8796'
+  maroon    = '#ee99a0'
+  peach     = '#f5a97f'
+  yellow    = '#eed49f'
+  green     = '#a6da95'
+  teal      = '#8bd5ca'
+  sky       = '#91d7e3'
+  sapphire  = '#7dc4e4'
+  blue      = '#8aadf4'
+  lavender  = '#b7bdf8'
+  text      = '#cad3f5'
+  subtext1  = '#b8c0e0'
+  subtext0  = '#a5adcb'
+  overlay2  = '#939ab7'
+  overlay1  = '#8087a2'
+  overlay0  = '#6e738d'
+
 [secondary_prompt]
   template = '❯❯ '
-  foreground = 'magenta'
+  foreground = 'p:pink'
   background = 'transparent'
 
 [transient_prompt]
   template = '❯ '
   background = 'transparent'
-  foreground_templates = ['{{if gt .Code 0}}red{{end}}', '{{if eq .Code 0}}magenta{{end}}']
+  foreground_templates = ['{{if gt .Code 0}}p:red{{end}}', '{{if eq .Code 0}}p:pink{{end}}']
 
 # ---------- Line 1 (left): (venv) user@host path on branch ----------
 [[blocks]]
@@ -22,27 +47,27 @@ final_space = true
   [[blocks.segments]]
     type = 'python'
     style = 'plain'
-    foreground = 'yellow'
+    foreground = 'p:yellow'
     background = 'transparent'
     template = '{{ if .Venv }}({{ .Venv }}) {{ end }}'
 
     [blocks.segments.properties]
       fetch_version = false
 
-  # user@host, only over SSH. Green on login nodes, peach everywhere else (e.g. compute nodes)
+  # user@host, only over SSH. Green on login nodes, sky everywhere else (e.g. compute nodes)
   [[blocks.segments]]
     type = 'session'
     style = 'plain'
     background = 'transparent'
-    foreground = '#f5a97f'
-    foreground_templates = ['{{ if hasPrefix "login" .HostName }}green{{ end }}']
+    foreground = 'p:sky'
+    foreground_templates = ['{{ if hasPrefix "login" .HostName }}p:green{{ end }}']
     template = '{{ if .SSHSession }}{{ .UserName }}@{{ .HostName }} {{ end }}'
 
   # Current folder, shortened to the last 3 levels
   [[blocks.segments]]
     type = 'path'
     style = 'plain'
-    foreground = 'blue'
+    foreground = 'p:blue'
     background = 'transparent'
     template = '{{ .Path }}'
 
@@ -55,9 +80,9 @@ final_space = true
   [[blocks.segments]]
     type = 'git'
     style = 'plain'
-    foreground = '#c6a0f6'
+    foreground = 'p:subtext0'
     background = 'transparent'
-    template = ' <#6e738d>on</> <b>{{ .HEAD }}</b>{{ if .Working.Changed }}<yellow>*</>{{ end }}{{ if .Staging.Changed }}<green>+</>{{ end }}{{ if gt .Behind 0 }}<red> ↓{{ .Behind }}</>{{ end }}{{ if gt .Ahead 0 }}<cyan> ↑{{ .Ahead }}</>{{ end }}'
+    template = ' <p:overlay0>on</> <b>{{ .HEAD }}</b>{{ if .Working.Changed }}<p:yellow>*</>{{ end }}{{ if .Staging.Changed }}<p:green>+</>{{ end }}{{ if gt .Behind 0 }}<p:red> ↓{{ .Behind }}</>{{ end }}{{ if gt .Ahead 0 }}<p:teal> ↑{{ .Ahead }}</>{{ end }}'
 
     [blocks.segments.properties]
       branch_icon = ''
@@ -73,7 +98,7 @@ final_space = true
   [[blocks.segments]]
     type = 'executiontime'
     style = 'plain'
-    foreground = 'yellow'
+    foreground = 'p:yellow'
     background = 'transparent'
     template = '{{ .FormattedMs }}'
 
@@ -82,7 +107,7 @@ final_space = true
       threshold = 5000
       style = 'round'
 
-# ---------- Line 2: ❯ (magenta, red after a failed command) ----------
+# ---------- Line 2: ❯ (pink, red after a failed command) ----------
 [[blocks]]
   type = 'prompt'
   alignment = 'left'
@@ -93,7 +118,7 @@ final_space = true
     style = 'plain'
     background = 'transparent'
     template = '❯'
-    foreground_templates = ['{{if gt .Code 0}}red{{end}}', '{{if eq .Code 0}}magenta{{end}}']
+    foreground_templates = ['{{if gt .Code 0}}p:red{{end}}', '{{if eq .Code 0}}p:pink{{end}}']
 
     [blocks.segments.properties]
       cache_duration = 'none'
