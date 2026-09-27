@@ -13,6 +13,8 @@ if [[ "$OSTYPE" == darwin* ]]; then
 else
   # Cluster: defines the `module` command (not loaded automatically in non-login shells like tmux panes)
   [ -f /etc/profile.d/modules.sh ] && source /etc/profile.d/modules.sh
+  # Go programs (like oh-my-posh) start one thread per CPU by default; login nodes have many
+  export GOMAXPROCS=4
   # Neovim installed in home dir
   export PATH="$HOME/nvim-linux-x86_64/bin:$PATH"
 fi
