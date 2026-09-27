@@ -23,7 +23,7 @@ final_space = true
     style = 'plain'
     background = 'transparent'
     foreground = 'green'
-    template = '{{ .UserName }}@[{{ .HostName }}] '
+    template = '{{ if .SSHSession }}{{ .UserName }}@{{ .HostName }} {{ end }}'  # only shown over SSH
 
   [[blocks.segments]]
     template = '{{ .Path }}'
@@ -34,7 +34,8 @@ final_space = true
 
     [blocks.segments.properties]
       cache_duration = 'none'
-      style = 'full'
+      style = 'agnoster_short'
+      max_depth = 3
 
   [[blocks.segments]]
     template = ' git:<b>({{ .HEAD }})</b>{{ if .Working.Changed }}<yellow> *</>{{ end }}{{ if .Staging.Changed }}<green> *</>{{ end }}{{ if gt .Behind 0 }}<red> ↓{{ .Behind }}</>{{ end }}{{ if gt .Ahead 0 }}<green> ↑{{ .Ahead }}</>{{ end }}'

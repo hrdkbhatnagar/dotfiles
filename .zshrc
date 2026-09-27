@@ -44,6 +44,12 @@ zinit light zsh-users/zsh-syntax-highlighting     # keep last
 command -v oh-my-posh >/dev/null && eval "$(oh-my-posh init zsh --config $HOME/.config/ohmyposh/zen.toml)"
 command -v fzf >/dev/null && eval "$(fzf --zsh)"
 
+# fzf colours: catppuccin macchiato
+export FZF_DEFAULT_OPTS=" \
+--color=bg+:#363A4F,bg:#24273A,spinner:#F4DBD6,hl:#ED8796 \
+--color=fg:#CAD3F5,header:#ED8796,info:#C6A0F6,pointer:#F4DBD6 \
+--color=marker:#B7BDF8,fg+:#CAD3F5,prompt:#C6A0F6,hl+:#ED8796"
+
 # ---------- Keybindings ----------
 bindkey -e
 bindkey '^p' history-search-backward
@@ -88,3 +94,5 @@ fi
 
 # ---------- Local overrides and secrets (not in git) ----------
 [[ -f ~/.zshrc.local ]] && source ~/.zshrc.local
+
+true   # make sure the first prompt doesn't start with a "failed" exit code
