@@ -12,37 +12,52 @@ final_space = true
   background = 'transparent'
   foreground_templates = ['{{if gt .Code 0}}red{{end}}', '{{if eq .Code 0}}magenta{{end}}']
 
-# ---------- Line 1 (left): user@host  path  git ----------
+# ---------- Line 1 (left): (venv) user@host path on branch ----------
 [[blocks]]
   type = 'prompt'
   alignment = 'left'
   newline = true
 
+  # Python virtualenv / conda env, only when one is active
+  [[blocks.segments]]
+    type = 'python'
+    style = 'plain'
+    foreground = 'yellow'
+    background = 'transparent'
+    template = '{{ if .Venv }}({{ .Venv }}) {{ end }}'
+
+    [blocks.segments.properties]
+      fetch_version = false
+
+  # user@host, only over SSH. Green on login nodes, peach everywhere else (e.g. compute nodes)
   [[blocks.segments]]
     type = 'session'
     style = 'plain'
     background = 'transparent'
-    foreground = 'green'
-    template = '{{ if .SSHSession }}{{ .UserName }}@{{ .HostName }} {{ end }}'  # only shown over SSH
+    foreground = '#f5a97f'
+    foreground_templates = ['{{ if hasPrefix "login" .HostName }}green{{ end }}']
+    template = '{{ if .SSHSession }}{{ .UserName }}@{{ .HostName }} {{ end }}'
 
+  # Current folder, shortened to the last 3 levels
   [[blocks.segments]]
-    template = '{{ .Path }}'
-    foreground = 'blue'
-    background = 'transparent'
     type = 'path'
     style = 'plain'
+    foreground = 'blue'
+    background = 'transparent'
+    template = '{{ .Path }}'
 
     [blocks.segments.properties]
       cache_duration = 'none'
       style = 'agnoster_short'
       max_depth = 3
 
+  # Git: "on main*+ ↓1 ↑2"  (* unstaged, + staged, ↓ behind, ↑ ahead)
   [[blocks.segments]]
-    template = ' git:<b>({{ .HEAD }})</b>{{ if .Working.Changed }}<yellow> *</>{{ end }}{{ if .Staging.Changed }}<green> *</>{{ end }}{{ if gt .Behind 0 }}<red> ↓{{ .Behind }}</>{{ end }}{{ if gt .Ahead 0 }}<green> ↑{{ .Ahead }}</>{{ end }}'
-    foreground = 'white'
-    background = 'transparent'
     type = 'git'
     style = 'plain'
+    foreground = '#c6a0f6'
+    background = 'transparent'
+    template = ' <#6e738d>on</> <b>{{ .HEAD }}</b>{{ if .Working.Changed }}<yellow>*</>{{ end }}{{ if .Staging.Changed }}<green>+</>{{ end }}{{ if gt .Behind 0 }}<red> ↓{{ .Behind }}</>{{ end }}{{ if gt .Ahead 0 }}<cyan> ↑{{ .Ahead }}</>{{ end }}'
 
     [blocks.segments.properties]
       branch_icon = ''
@@ -50,31 +65,22 @@ final_space = true
       commit_icon = '@'
       fetch_status = true
 
-# ---------- Line 1 (right): python env  execution time ----------
+# ---------- Line 1 (right): duration of the last command, if it took over 5s ----------
 [[blocks]]
   type = 'rprompt'
   overflow = 'hidden'
 
   [[blocks.segments]]
-    type = 'python'
-    style = 'plain'
-    foreground = 'yellow'
-    background = 'transparent'
-    template = '{{ if .Venv }}(<b>{{ .Venv }}</b>) {{ end }}'
-
-    [blocks.segments.properties]
-      fetch_version = false
-
-  [[blocks.segments]]
-    template = '{{ .FormattedMs }}'
-    foreground = 'yellow'
-    background = 'transparent'
     type = 'executiontime'
     style = 'plain'
+    foreground = 'yellow'
+    background = 'transparent'
+    template = '{{ .FormattedMs }}'
 
     [blocks.segments.properties]
       cache_duration = 'none'
       threshold = 5000
+      style = 'round'
 
 # ---------- Line 2: ❯ (magenta, red after a failed command) ----------
 [[blocks]]
@@ -83,10 +89,10 @@ final_space = true
   newline = true
 
   [[blocks.segments]]
-    template = '❯'
-    background = 'transparent'
     type = 'text'
     style = 'plain'
+    background = 'transparent'
+    template = '❯'
     foreground_templates = ['{{if gt .Code 0}}red{{end}}', '{{if eq .Code 0}}magenta{{end}}']
 
     [blocks.segments.properties]
