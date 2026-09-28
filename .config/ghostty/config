@@ -40,6 +40,18 @@ keybind = cmd+shift+r=text:\x1bR
 
 keybind = cmd+shift+bracket_left=text:\x1b{
 keybind = cmd+shift+bracket_right=text:\x1b}
-window-padding-color = extend
+
 window-padding-balance = true
-adjust-cell-height = 2%
+
+
+keybind = cmd+shift+s=text:\x1bS
+keybind = cmd+shift+n=text:\x1bN
+
+window-padding-x = 0
+window-padding-y = 0
+
+
+background-opacity-cells = true
+background-opacity = 0.90
+background-blur-radius = 30
+window-step-resize = true
